@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>电子名片</title>
+ </head>
+ <style>
+	*{margin:0; padding:0;}
+	html{height:100%;}
+	body{
+	height:100%;
+	background:url("images/bg5.jpg") no-repeat;background-size:cover;
+	overflow:hidden;
+	font-family:"微软雅黑";
+	color : #ffffff;
+	}
+		#card{
+			height:100%;
+			width:900px;
+			height:280px;
+			background:rgba(0,0,0,0.5);
+			margin:300px auto 0;
+			padding:20px 50px;
+			
+		}
+		.info{
+			width:600px;
+			height:300px;
+			/*border:1px solid red;*/
+			float:left;
+			margin-right:36px;
+		}
+		.qrcode{
+			width:260px;
+			height:180px;
+			/*border:1px solid red;*/
+			float:left;
+			background:#ccc;
+			color:#999;
+			text-align:center;
+			padding-top:80px;
+			position:relative;
+		}
+		.info p{
+			margin:15px 15px;
+			float:left;
+		}
+		.info p{
+			color : #ffffff;
+			font-size:14px;
+		}
+		.info p input{
+			width:180px;
+			height:30px;
+			border:0;
+			outline:0;
+			border-radius:5px;
+			padding-left:10px;
+		}
+		.info p.last{
+			width:450px;
+			height:40px;
+			background:#44b549;
+			text-align:center;
+			margin-left:30px;
+		}
+		.info p.last a{
+			display:block;
+			width:100%;
+			height:100%;
+			color:#ffffff;
+			text-decoration:none;
+			line-height:40px;
+		}
+		.qrcode img{
+			position:absolute;
+			top:1px;
+			left:1px;
+		}
+ </style>
+ <body>
+	<div id="card">
+		<div class="info">
+			<p>
+				<span>姓名:</span>
+				<input type="text" id="name">
+			</p>
+			<p>
+				<span>公司:</span>
+				<input type="text" id="company">
+			</p>
+			<p>
+				<span>职务:</span>
+				<input type="text" id="job">
+			</p>
+			<p>
+				<span>地址:</span>
+				<input type="text" id ="address">
+			</p>
+			<p>
+				<span>电话:</span>
+				<input type="text" id="mobile">
+			</p>
+			<p>
+				<span>邮箱:</span>
+				<input type="text" id="email">
+			</p>
+			<p>
+				<span>网址:</span>
+				<input type="text" id="web">
+			</p>
+			<p>
+				<span>备注:</span>
+				<input type="text" id="desc">
+			</p>
+			<p class="last">
+				<a href="javascript:;" id="btn">生成通讯录二维码</a>
+			</p>
+
+		</div>
+		<div class="qrcode" id="qrcode">
+			左侧输入内容<br>
+			点击生成二维码
+		</div>
+	</div>
+	<script src="js/jquery-1.11.1.min.js"></script>
+	<script src="js/qrcode.js"></script>
+	<script>
+		//获取所有的input里面输入的值，然后生成到二维码里面去/
+		//定义多个变量来储存input获取的值
+		var name="",company="",job="",address="",mobile="",email="",web="",desc="";
+		//$("#btn")通过id名来获取点击标签
+		$("#btn").click(function(){//点击实现什么效果//
+			if($("#name").val().length > 1)
+			{
+				name ="FN:"+$("#name").val() + "\n";
+			}
+			if($("#company").val().length > 1)
+			{
+				company ="ORG:"+$("#company").val() + "\n";
+			}
+			if($("#job").val().length > 1)
+			{
+				job ="WORK:"+$("#job").val() + "\n";
+			}
+			if($("#address").val().length > 1)
+			{
+				address ="ADR:"+$("#address").val() + "\n";
+			}
+			if($("#mobile").val().length > 1)
+			{
+				mobile ="TEL"+$("#mobile").val() + "\n";
+			}
+			if($("#email").val().length > 1)
+			{
+				email ="EMAIL:"+$("#email").val() + "\n";
+			}
+			if($("#web").val().length > 1)
+			{
+				web ="URL:"+$("#web").val() + "\n";
+			}
+			if($("#desc").val().length > 1)
+			{
+				desc ="NOTE"+$("#desc").val() + "\n";
+			}
+			var info ="BEGIN:VCARD\n"+name+company+job+address+mobile+email+web+desc+"END:VCARD";
+			//console.log(info);//在控制台输出
+			//先清空生成二维码盒子的内容
+			$("#qrcode").html("");
+			//调用qrcode插件的方法来生成二维码
+			var qrcode = new QRCode("qrcode");
+			qrcode.makeCode(info);
+		});
+	</script>
+ </body>
+</html>
